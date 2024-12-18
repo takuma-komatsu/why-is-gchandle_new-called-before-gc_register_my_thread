@@ -53,6 +53,21 @@ namespace gc
     static uint32_t
     alloc_handle(HandleData *handles, Il2CppObject *obj, bool track)
     {
+        if (!GC_thread_is_registered())
+        {
+            // If GC_thread_is_registered() returns false, it means that GC_register_my_thread() has not been called.
+            // And when GC is performed within this function, it will reach the ABORT() of GC_push_all_stacks().
+
+            // It's highly unlikely that a GC will occur so soon after this,
+            // but you can reproduce the situation by uncommenting the code below to force a GC to fire.
+            // GC_start_incremental_collection();
+
+            // If you set a breakpoint here, it will break in AssetBundleLoadFromManagedStreamAsyncOperation::LoadArchiveJob().
+            // This means that GCHandle::New() is being called before GC_register_my_thread().
+            static int number_of_times_passed_here = 0;
+            ++number_of_times_passed_here;
+        }
+
         uint32_t slot;
         int i;
         lock_handles(handles);
