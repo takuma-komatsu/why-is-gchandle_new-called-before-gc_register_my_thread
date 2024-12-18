@@ -1,6 +1,6 @@
 # why-is-gchandle_new-called-before-gc_register_my_thread
 
-Example project for reporting a bug where GCHandle::New() is called before gc_register_my_thread() on a background thread when using AssetBundle.LoadFromStreamAsync().
+Example project for reporting a bug where GCHandle::New() is called before GC_register_my_thread() on a background thread when using AssetBundle.LoadFromStreamAsync().
 
 ## Bug Details
 
@@ -12,15 +12,15 @@ At this time, if the following conditions are met, your application will crash w
 - Condition 2
   - When Incremental GC is performed in GCHandle::New() called from AssetBundleLoadFromManagedStreamAsyncOperation::LoadArchiveJob()
 
-The cause of the crash is indicated by the ABORT() message "Collecting from unknown thread", which specifically means that gc_register_my_thread() has not been called on that thread.
-So calling gc_register_my_thread() before the first call to GCHandle::New() in each background thread should solve this problem.
-(Alternatively, you may be able to work around this by disabling GC until you call gc_register_my_thread().)
+The cause of the crash is indicated by the ABORT() message "Collecting from unknown thread", which specifically means that GC_register_my_thread() has not been called on that thread.
+So calling GC_register_my_thread() before the first call to GCHandle::New() in each background thread should solve this problem.
+(Alternatively, you may be able to work around this by disabling GC until you call GC_register_my_thread().)
 
 Either way, I think fixing this bug would require a change to the engine code.
 
 ## Regarding debug code added to IL2CPP
 
-I added the following debug code to set a breakpoint when GCHandle::New is called before gc_register_my_thread() is called.
+I added the following debug code to set a breakpoint when GCHandle::New is called before GC_register_my_thread() is called.
 Also, because this bug has a very low occurrence rate, we have provided code to reproduce the situation.
 
 https://github.com/takuma-komatsu/why-is-gchandle_new-called-before-gc_register_my_thread/blob/1c3c1994a7ea8754991bcfd23f7b7aead732d8f2/il2cpp-patch/libil2cpp/gc/GCHandle.cpp#L60-L75
