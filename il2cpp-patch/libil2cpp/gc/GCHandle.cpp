@@ -53,6 +53,11 @@ namespace gc
     static uint32_t
     alloc_handle(HandleData *handles, Il2CppObject *obj, bool track)
     {
+        uint32_t slot;
+        int i;
+        lock_handles(handles);
+
+#ifndef IL2CPP_PATCH
         if (!GC_thread_is_registered())
         {
             // If GC_thread_is_registered() returns false, it means that GC_register_my_thread() has not been called.
@@ -67,10 +72,8 @@ namespace gc
             static int number_of_times_passed_here = 0;
             ++number_of_times_passed_here;
         }
+#endif
 
-        uint32_t slot;
-        int i;
-        lock_handles(handles);
         if (!handles->size)
         {
             handles->size = 32;
