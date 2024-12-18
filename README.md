@@ -39,6 +39,12 @@ NOTE: During the build pre-processing, IL2CPP is copied locally from the Unity i
 1. Search for the string "IL2CPP_PATCH" and set a breakpoint.
 1. Start debugging.
 
+If you uncomment GC_start_incremental_collection() it crashes with this stack trace:
+
+![image](https://github.com/user-attachments/assets/d424480f-c9ff-44d9-826e-276461afc9db)
+
+**This stack trace is almost identical to what you would see if a real bug occurred.**
+
 ### Mac
 
 1. Open "Build Settings"
@@ -48,3 +54,5 @@ NOTE: During the build pre-processing, IL2CPP is copied locally from the Unity i
 1. Open \<OutputDir\>/Il2CppOutputProject/IL2CPP/libil2cpp/gc/GCHandle.cpp.
 1. Search for the string "IL2CPP_PATCH" and set a breakpoint.
 1. Start debugging.
+
+If you uncomment GC_start_incremental_collection(), it crashes just like on Windows.
