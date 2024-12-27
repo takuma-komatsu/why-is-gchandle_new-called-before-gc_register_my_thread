@@ -8,7 +8,7 @@ When you call AssetBundle.LoadFromStreamAsync(), Unity will start the load proce
 At this time, if the following conditions are met, your application will crash with [this ABORT()](https://github.com/ivmai/bdwgc/blob/f3d2d4a45c423d9bbe78b8670f2a1469cdd79ebc/pthread_stop_world.c#L940), regardless of platform:
 
 - Condition 1
-  - When the allocated worker thread is used for the first time
+  - When the assigned thread is used without being registered as a managed thread (i.e., the first time it is used)
 - Condition 2
   - When Incremental GC is performed in GCHandle::New() called from AssetBundleLoadFromManagedStreamAsyncOperation::LoadArchiveJob()
 
