@@ -27,6 +27,12 @@ https://github.com/takuma-komatsu/why-is-gchandle_new-called-before-gc_register_
 
 NOTE: During the build pre-processing, IL2CPP is copied locally from the Unity installation folder, the above patch is applied, and then the build is performed using that.
 
+### ⚠WARNING⚠
+
+**If you wish to modify the IL2CPP runtime code and release your product, you will need to purchase a “Source Code Adapt” subscription to Unity.**
+
+https://unity.com/products/source-code
+
 ## How to build && debug
 
 ### Windows
