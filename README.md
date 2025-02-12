@@ -2,6 +2,16 @@
 
 Example project for reporting a bug where GCHandle::New() is called before GC_register_my_thread() on a background thread when using AssetBundle.LoadFromStreamAsync().
 
+## **ℹ️Very Important Notice**
+
+**This bug has been fixed in Unity 2022.3.58**
+
+https://unity.com/ja/releases/editor/whats-new/2022.3.58
+
+> Asset Bundles: Fixed rare race condition when loading AssetBundles using AssetBundle.LoadFromStream. (UUM-92381)
+
+Thanks to everyone at Unity Technologies for their hard work in fixing the bug!!
+
 ## Bug Details
 
 When you call AssetBundle.LoadFromStreamAsync(), Unity will start the load process in a background thread.
